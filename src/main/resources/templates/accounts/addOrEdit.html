@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{dashboardLayout.html}"
+>
+<head></head>
+<body>
+<section class="row" layout:fragment="content">
+    <div class="col-6 offset-3 mt-4">
+        <form
+                th:action="@{/admin/accounts/saveOrUpdate}"
+                method="post"
+                th:object="${account}"
+        >
+            <div class="card">
+                <div class="card-header">
+                    <h2 th:text="${account.isEdit ? 'Chỉnh sửa tài khoản' : 'Thêm tài khoản'}">Thêm tài khoản</h2>
+                </div>
+                <div class="card-body">
+                    <div
+                            th:if="${message1 != null}"
+                            class="alert alert-danger"
+                            role="alert"
+                    >
+                        <i>[[${message1}]]</i>
+                    </div>
+                    <div class="form-group d-none">
+                        <label>ID</label>
+                        <input type="hidden" th:field="*{isEdit}"/>
+                        <input
+                                type="text"
+                                class="form-control"
+                                th:field="*{id}"
+                                aria-describedby="categoryIdHid"
+                                placeholder="id"
+                                readonly
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Mã nhân viên</label>
+                        <input
+                                th:field="*{maNV}"
+                                th:data-name="${maNV}"
+                                type="text"
+                                class="form-control"
+                                name="maNV"
+                                id="maNV"
+                                aria-describedby="usernameHid"
+                                placeholder="Mã nhân viên"
+                        />
+                        <small
+                                th:if="${#fields.hasErrors()}"
+                                id="usernameHip"
+                                class="form-text text-muted"
+                        ><span th:errors="*{maNV}" style="color: red"></span
+                        ></small>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input
+                                th:field="*{username}"
+                                th:data-name="${username}"
+                                th:data-isExist="${account.getIsExist()}"
+                                type="text"
+                                class="form-control"
+                                name="username"
+                                id="username"
+                                aria-describedby="usernameHid"
+                                placeholder="Enter username"
+                        />
+                        <small
+                                th:if="${#fields.hasErrors()}"
+                                id="usernameHip"
+                                class="form-text text-muted"
+                        ><span th:errors="*{username}" style="color: red"></span
+                        ></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input
+
+                                th:field="*{password}"
+                                type="password"
+                                class="form-control"
+                                name="password"
+                                id="password"
+                                aria-describedby="passwordHid"
+                                placeholder="Enter password"
+                        />
+                        <small
+                                th:if="${#fields.hasErrors()}"
+                                id="usernameHip"
+                                class="form-text text-muted"
+                        ><span th:errors="*{password}" style="color: red"></span
+                        ></small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="categoryId">Role</label>
+                        <select
+                                th:field="*{RoleId}"
+                                class="form-control"
+                                name="categoryId"
+                                id="categoryId"
+                        >
+                            <option
+                                    th:each=" item : ${roles}"
+                                    th:value="${item.RoleId}"
+                                    th:text="${item.tenRole}"
+                                    th:selected="${item.RoleId == account.id}"
+                            >
+
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="enabled">Trạng thái</label>
+                        <select
+                                th:field="*{enabled}"
+                                class="form-control"
+                                name="categoryId"
+                                id="enabled"
+                        >
+                            <option value="1" >Enabled</option>
+                            <option value="0" >Disabled</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                    <a th:href="@{/admin/accounts/}" class="btn btn-success"
+                    >Danh sách tài khoản</a
+                    >
+                    <button class="btn btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span th:if="${account.isEdit}">Cập nhập</span>
+                        <span th:unless=" ${account.isEdit}">Lưu</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

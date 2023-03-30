@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{/dashboardLayout.html}">
+
+<head>
+    <title>Quản lý phụ tùng</title>
+
+    <link rel="stylesheet" href="../css/manager.css" />
+</head>
+
+<body>
+    <section class="row" layout:fragment="content">
+        <div class="col mt-4">
+            <div class="card">
+                <div class="card-header">Danh sách phụ tùng</div>
+                <div class="card-body">
+                    <div th:if="${message != null}" class="alert alert-primary" role="alert">
+                        <i>[[${message}]]</i>
+                    </div>
+                    <div class="row my-2">
+                        <div class="col">
+                            <form th:action="@{/manager/phutungs}">
+                                <div class="form-inline float-left">
+                                    <label for="tenPhutung">Tên phụ tùng</label>
+                                    <input type="text" class="form-control ml-1" name="tenPhutung" id="tenPhutung"
+                                        aria-describedby="helpId" placeholder="Tên phụ tùng" />
+                                    <button class="btn btn-outline-primary ml-1">Tìm kiếm</button>
+                                </div>
+                                <div class="form-inline float-left ml-5">
+                                    <label>Loại phụ tùng </label>
+                                    <select class="form-control operator" name="maLoaiPhutung" id="maLoaiPhutung">
+                                        <option value="all">All</option>
+                                        <option th:each=" item : ${loaiphutungs}" th:value="${item.maLoaiPhutung}"
+                                            th:text="${item.tenLoai}">
+                                        </option>
+
+                                    </select>
+                                    <button class="btn btn-outline-primary ml-1">Tìm kiếm</button>
+                                </div>
+                            </form>
+                            <div class="float-right">
+                                <a class="btn btn-outline-primary" th:href="@{/manager/phutungs/add}">Thêm phụ tùng</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" th:if="${!phutungPage.hasContent()}">
+                        <div class="col">
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Phụ tùng không tồn tại</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col" th:if="${phutungPage.hasContent()}">
+                        <div class="row ">
+                            <div class="col-3 mt2 p-2" th:each=" phutung , iStat : ${phutungPage.content}">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img th:src="@{'/manager/phutungs/images/' + ${phutung.image}}" alt="Đang tải..."
+                                            class="img-fluid">
+
+                                        <div class="row border-top mt-2">
+                                            <b style="font-size: 13px">[[${phutung.tenPhutung}]]</b>
+                                        </div>
+                                        <div class="row border-top mt-2 ">
+                                            <b >Giá: [[${phutung.gia}]]</b>
+                                        </div>
+                                        <div class="row border-top mt-2 ">
+                                            <b >Còn lại: [[${phutung.soLuong}]]</b>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a th:href="@{'/manager/phutungs/edit/' + ${phutung.maPhutung}}"
+                                            class="btn btn-outline-warning"><i class="fas fa-edit"></i></a>
+                                        <a th:data-id="${phutung.maPhutung}" th:data-name="${phutung.tenPhutung}"
+                                            onclick="showConfirmModelDialog(this.getAttribute('data-id'),this.getAttribute('data-name'))"
+                                            class="btn btn-outline-danger"><i
+                                                class="fas fa-trash-alt text-danger "></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        const showConfirmModelDialog = (id, name) => {
+                            $("#productName").text(name);
+                            $("#yesOption").attr("href", "/manager/phutungs/delete/" + id);
+                            $("#confirmationId").modal("show");
+                        };
+                    </script>
+                    <!-- Modal -->
+                    <div class="modal fade" id="confirmationId" tabindex="-1" role="dialog"
+                        aria-labelledby="modelTitleId" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Xác nhận</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Bạn có muốn xóa " <span id="productName"></span>"?
+                                </div>
+                                <div class="modal-footer">
+                                    <a id="yesOption" type="button" class="btn btn-danger">Có</a>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                        Không
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <form action="">
+                        <div class="form-inline float-left">
+                            <label for="size">Page Size: </label>
+                            <select class="form-control" name="size" id="size" onchange="this.form.submit()">
+                                <option th:selected="${phutungPage.size == 12}" value="12">
+                                    12
+                                </option>
+                                <option th:selected="${phutungPage.size == 16}" value="16">
+                                    16
+                                </option>
+                            </select>
+                        </div>
+
+                        <nav aria-label="Page navigation" th:if="${phutungPage.totalPages > 0}">
+                            <ul class="pagination justify-content-center">
+                                <li th:class="${1 == number + 1} ? 'page-item active' : 'page-item' ">
+                                    <a th:href="@{/manager/phutungs/(tenPhutung=${tenPhutung}, size=${phutungPage.size},page=${0})}"
+                                        th:class="page-link">
+                                        First
+                                    </a>
+                                </li>
+                                <li class="page-item active" th:each="pageNumber : ${pageNumbers}"
+                                    th:if="${phutungPage.totalPages > 1}"
+                                    th:class="${pageNumber  == number +1 } ? 'page-item active ' : 'page-item'">
+                                    <a th:href="@{/manager/phutungs/(tenPhutung=${tenPhutung}, size=${phutungPage.size},page=${pageNumber - 1})}"
+                                        th:class="page-link" th:text="${pageNumber}">1</a>
+                                </li>
+                                <li
+                                    th:class="${phutungPage.totalPages -1 == number} ? 'page-item active' : 'page-item' ">
+                                    <a th:href="@{/manager/phutungs/(tenPhutung=${tenPhutung}, size=${phutungPage.size},page=${phutungPage.totalPages -1})}"
+                                        th:class="page-link">
+                                        Last
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function format1(n, currency) {
+            return currency + n.toFixed(2).replace(/./g, function (c, i, a) {
+                return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+            });
+        }
+
+        
+    </script>
+</body>
+
+</html>

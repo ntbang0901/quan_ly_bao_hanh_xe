@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{dashboardLayout.html}">
+
+<head> </head>
+
+<body>
+  <section class="row" layout:fragment="content">
+    <div class="col-6 offset-3 mt-4">
+      <form th:action="@{/manager/phieubhs/saveOrUpdate}" method="post" th:object="${phieubh}">
+        <div class="card">
+          <div class="card-header">
+            <h2 th:text="${phieubh.Edit ? 'Chỉnh sủa phiếu bảo hành' : 'Tạo phiếu bảo hành'}">Tạo phiếu bảo hành</h2>
+          </div>
+          <div class="card-body">
+            <div th:if="${message1 != null}" class="alert alert-danger" role="alert">
+              <i>[[${message1}]]</i>
+            </div>
+            <div class="form-group d-none">
+              <label>ID</label>
+              <input type="hidden" th:field="*{Edit}" />
+              <input type="text" class="form-control" th:field="*{maPBH}" aria-describedby="categoryIdHid"
+                placeholder="id" readonly />
+            </div>
+            <div class="form-group">
+              <label for="maXeBH">Mã xe bảo hành</label>
+              <input th:field="*{maXeBH}" th:data-name="${maXeBH}" type="text" class="form-control" name="maXeBH"
+                id="maXeBH" aria-describedby="maXeBHHid" placeholder="Mã xe bảo hành"  />
+              <small th:if="${#fields.hasErrors()}" id="maXeBHHid" class="form-text text-muted"><span
+                  th:errors="*{maXeBH}" style="color: red"></span></small>
+            </div>
+            <div class="form-group">
+              <label for="manv">Mã nhân viên lập phiếu</label>
+              <input type="text" class="form-control" name="manv" id="manv" aria-describedby="usernameHid"
+                th:value="${nvdto.maNV}" readonly />
+
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <script>
+                  // Date picker only
+                  $(".datepicker").datepicker({
+                    format: "mm/dd/yyyy",
+                    startDate: "-3d",
+                  });
+
+                </script>
+
+                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                  <label class="control-label" for="datepicker">Ngày lập</label>
+                  <div class="input-group date" data-provide="datepicker">
+                    <input type="text" placeholder="Ngày lập phiếu" class="form-control w-50" th:field="*{ngayLap}"
+                      id="current-time" name="ngayLap" aria-describedby="ngayLapHid" required />
+
+                    <div class="input-group-addon">
+                      <span class="glyphicon glyphicon-th input-group-text h-100">
+                        <i class="fas fa-calendar text-black-50"></i></span>
+                    </div>
+                  </div>
+                  <small th:if="${#fields.hasErrors()}" id="ngayLapHid" class="form-text text-muted"><span
+                      th:errors="*{ngayLap}" style="color: red"></span></small>
+                </div>
+
+
+
+              </div>
+              <div class="col-6">
+                <script>
+                  var curDate = new Date();
+
+                  // Ngày hiện tại
+                  var curDay = curDate.getDate();
+
+                  // Tháng hiện tại
+                  var curMonth = curDate.getMonth() + 1;
+
+                  // Năm hiện tại
+                  var curYear = curDate.getFullYear();
+
+                  // Gán vào thẻ HTML
+                  if(document.getElementById('current-time').value === ''){
+                    document.getElementById('current-time').value = curMonth + "/" + curDay + "/" + curYear;
+                  }
+
+                </script>
+
+                <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                  <label class="control-label" for="datepicker">Ngày nhận:</label>
+                  <div class="input-group date" data-provide="datepicker">
+                    <input type="text" class="form-control w-50" th:field="*{ngayNhan}" id="ngayNhan" name="ngayNhan"
+                           placeholder="Ngày nhận" />
+                    <div class="input-group-addon">
+                      <span class="glyphicon glyphicon-th input-group-text h-100">
+                        <i class="fas fa-calendar text-black-50"></i></span>
+                    </div>
+
+                  </div>
+                  <small th:if="${#fields.hasErrors()}" id="usernameHip" class="form-text text-muted"><span
+                          th:errors="*{ngayNhan}" style="color: red"></span></small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="tinhTrangxe">Tình trạng xe</label>
+              <textarea th:field="*{tinhTrangxe}" class="form-control" name="tinhTrangxe" id="tinhTrangxe" rows="3"
+                placeholder="Tình trạng xe" aria-describedby="tinhTrangxeHid" ></textarea>
+              <small th:if="${#fields.hasErrors()}" id="tinhTrangxeHid" class="form-text text-muted"><span
+                  th:errors="*{tinhTrangxe}" style="color: red"></span></small>
+            </div>
+            <div class="form-group">
+              <label for="">Nội dung bảo hành</label>
+              <textarea th:field="*{noiDungBaoHanh}" class="form-control" name="noiDungBaoHanh" id="noiDungBaoHanh"
+                rows="3" placeholder="Nội dung bảo hành" aria-describedby="noiDungBaoHanhHid" ></textarea>
+              <small th:if="${#fields.hasErrors()}" id="noiDungBaoHanhHid" class="form-text text-muted"><span
+                  th:errors="*{noiDungBaoHanh}" style="color: red"></span></small>
+            </div>
+            <div class="form-group">
+              <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+              <script>
+                $(document).ready(function () {
+                  $(".statesSelect").select2();
+                });
+              </script>
+              <label>Phụ tùng:</label>
+              <select class="statesSelect form-control" name="listPT" multiple="multiple">
+                <option th:each=" item : ${phutungs}" th:value="${item.maPhutung}"
+                        th:text="${item.tenPhutung}" th:selected="${phieubh.Edit == true AND phuTung != null AND #lists.contains(phuTung, item.maPhutung)}"></option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select th:field="*{status}" class="form-control" name="status" id="status">
+                <option value="0">Đang giao việc</option>
+                <option value="1">Đang sữa chữa</option>
+                <option value="2">Bảo hành hoàn tất</option>
+              </select>
+              <small th:if="${#fields.hasErrors()}" id="usernameHip" class="form-text text-muted"><span
+                  th:errors="*{status}" style="color: red"></span></small>
+            </div>
+          </div>
+
+          <div class="card-footer text-muted">
+            <button type="reset" class="btn btn-secondary">Reset</button>
+            <a th:href="@{/manager/phieubhs/}" class="btn btn-success">Danh sách PBH</a>
+            <button class="btn btn-primary">
+              <i class="fas fa-save"></i>
+              <span th:if="${phieubh.Edit}">Cập nhập</span>
+              <span th:unless=" ${phieubh.Edit}">Lưu</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+
+
+</body>
+
+</html>

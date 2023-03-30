@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/dashboardLayout.html}"
+>
+  <head>
+    <title>Quản lý nhân viên</title>
+
+    <link rel="stylesheet" href="../css/admin.css" />
+  </head>
+  <body>
+    <section class="row" layout:fragment="content">
+      <div class="col mt-4">
+        <div class="card">
+          <div class="card-header">Danh sách nhân viên</div>
+          <div class="card-body">
+            <div
+              th:if="${message != null}"
+              class="alert alert-primary"
+              role="alert"
+            >
+              <i>[[${message}]]</i>
+            </div>
+            <div class="row my-2">
+              <div class="col">
+                <form th:action="@{/manager/staffs}">
+                  <div class="form-inline float-left">
+                    <label for="ten">Tên:</label>
+                    <input
+                      type="text"
+                      class="form-control ml-1"
+                      name="ten"
+                      id="ten"
+                      aria-describedby="helpId"
+                      placeholder="Tên"
+                    />
+                    <button class="btn btn-outline-primary ml-1">Tìm kiếm</button>
+                  </div>
+                </form>
+                <div class="float-right">
+                  <a
+                    class="btn btn-outline-primary"
+                    th:href="@{/manager/staffs/add}"
+                    >Thêm nhân viên</a
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row" th:if="${!staffPage.hasContent()}">
+              <div class="col">
+                <div class="alert alert-danger" role="alert">
+                  <strong>Nhân viên không tồn tại</strong>
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table
+                class="table table-striped table-inverse"
+                th:if="${staffPage.hasContent()}"
+              >
+                <thead class="thead-inverse">
+                  <tr>
+                    <th>MaNV</th>
+                    <th>Họ Tên</th>
+                    <th>Email</th>
+                    <th>Giới tính</th>
+                    <th>Quê quán</th>
+                    <th>SDT</th>
+                    <th>CMND</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each=" staff , iStat : ${staffPage.content}">
+                    <td scope="row">[[${staff.maNV}]]</td>
+                    <td th:text="${staff.ho + ' ' +staff.ten}"></td>
+                    <td th:text="${staff.email}"></td>
+                    <td th:text="${staff.gender ? 'Nam' : 'Nữ'}"></td>
+                    <td th:text="${staff.quequan}"></td>
+                    <td th:text="${staff.sdt}"></td>
+                    <td th:text="${staff.cmnd}"></td>
+                    <td>
+                      <a
+                        th:href="@{'/manager/staffs/edit/' + ${staff.maNV}}"
+                        class="btn btn-outline-warning"
+                        ><i class="fas fa-edit"></i
+                      ></a>
+                      <a
+                        th:data-ten="${staff.ho + ' ' + staff.ten}"
+                        th:data-id="${staff.maNV}"
+                        onclick="showConfirmModelDialog(this.getAttribute('data-id'),this.getAttribute('data-ten'))"
+                        class="btn btn-outline-danger"
+                        ><i class="fas fa-recycle"></i
+                      ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <script>
+              const showConfirmModelDialog = (id,name) => {
+                $("#productName").text(name);
+                $("#yesOption").attr("href", "/manager/staffs/delete/" + id);
+                $("#confirmationId").modal("show");
+              };
+            </script>
+            <!-- Modal -->
+            <div
+              class="modal fade"
+              id="confirmationId"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="modelTitleId"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận</h5>
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    Bạn có muốn xóa " <span id="productName"></span>"?
+                  </div>
+                  <div class="modal-footer">
+                    <a id="yesOption" type="button" class="btn btn-danger"
+                      >Có</a
+                    >
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Không
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer text-muted">
+            <form action="">
+              <div class="form-inline float-left">
+                <label for="size">Page Size: </label>
+                <select
+                  class="form-control"
+                  name="size"
+                  id="size"
+                  onchange="this.form.submit()"
+                >
+                  <option th:selected="${staffPage.size == 5}" value="5">
+                    5
+                  </option>
+                  <option th:selected="${staffPage.size == 10}" value="10">
+                    10
+                  </option>
+                </select>
+              </div>
+
+              <nav
+                aria-label="Page navigation"
+                th:if="${staffPage.totalPages > 0}"
+              >
+                <ul class="pagination justify-content-center">
+                  <li
+                    th:class="${1 == staffPage.number + 1} ? 'page-item active' : 'page-item' "
+                  >
+                    <a
+                      th:href="@{/manager/staffs/(hoten=${ten}, size=${staffPage.size},page=${0})}"
+                      th:class="page-link"
+                    >
+                      First
+                    </a>
+                  </li>
+                  <li
+                    class="page-item active"
+                    th:each="pageNumber : ${pageNumbers}"
+                    th:if="${staffPage.totalPages > 1}"
+                    th:class="${pageNumber  == accountPage.number +1 } ? 'page-item active ' : 'page-item'"
+                  >
+                    <a
+                      th:href="@{/manager/staffs/(hoten=${ten}, size=${staffPage.size},page=${pageNumber - 1})}"
+                      th:class="page-link"
+                      th:text="${pageNumber}"
+                      >1</a
+                    >
+                  </li>
+                  <li
+                    th:class="${staffPage.totalPages -1 == staffPage.number} ? 'page-item active' : 'page-item' "
+                  >
+                    <a
+                      th:href="@{/manager/staffs/(hoten=${ten}, size=${staffPage.size},page=${staffPage.totalPages -1})}"
+                      th:class="page-link"
+                    >
+                      Last
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

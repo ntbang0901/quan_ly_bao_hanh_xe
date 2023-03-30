@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/dashboardLayout.html}">
+
+<head>
+  <title>Quản lý phiếu bảo hành</title>
+
+  <link rel="stylesheet" href="../css/manager.css" />
+</head>
+
+<body>
+  <section class="row" layout:fragment="content">
+    <div class="col mt-4">
+      <div class="card">
+        <div class="card-header">Danh sách phiếu bảo hành</div>
+        <div class="card-body">
+          <div th:if="${message != null}" class="alert alert-primary" role="alert">
+            <i>[[${message}]]</i>
+          </div>
+          <div class="row my-2">
+            <div class="col">
+              <form th:action="@{/manager/phieubhs}">
+                <div class="form-inline float-left">
+                  
+                  <input type="text" class="form-control ml-1" name="tenNV" id="tenNV" aria-describedby="helpId"
+                    placeholder="Tên nhân viên lập phiếu" />
+                  <button class="btn btn-outline-primary ml-1">Tìm kiếm</button>
+                </div>
+                <div class="form-inline float-left ml-5">
+                  <label for="status">Status:</label>
+                  <select name="status" id="status" class="form-control">
+                    <option value="all">All</option>
+                    <option value="0">Đang giao việc</option>
+                    <option value="1">Đang sữa chữa</option>
+                    <option value="2">Bảo hành hoàn tất</option>
+                  </select>
+                  <button class="btn btn-outline-primary ml-1">Tìm kiếm</button>
+                </div>
+              </form>
+              <div class="float-right">
+                <a class="btn btn-outline-primary" th:href="@{/manager/phieubhs/add}">Thêm phiếu</a>
+              </div>
+            </div>
+          </div>
+          <div class="row" th:if="${!phieubhPage.hasContent()}">
+            <div class="col">
+              <div class="alert alert-danger" role="alert">
+                <strong>Phiếu không tồn tại</strong>
+              </div>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped table-inverse" th:if="${phieubhPage.hasContent()}">
+              <thead class="thead-inverse">
+                <tr>
+                  <th>Mã Phiếu</th>
+                  <th>Ngày lập</th>
+
+                  <th>Số xe</th>
+                  <th>Nhân viên lập phiếu</th>
+                  <th>Tình trạng bảo hành</th>
+                  <th>Nội dung bảo hành</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each=" phieubh , iStat : ${phieubhsdto}">
+                  <td scope="row">[[${phieubh.maPBH}]]</td>
+                  <td th:text="${phieubh.ngayLap}"></td>
+
+                  <td th:text="${phieubh.soXe}"></td>
+                  <td th:text="${phieubh.tenNV}"></td>
+                  <td th:text="${phieubh.tinhTrangxe}"></td>
+                  <td th:text="${phieubh.noiDungBaoHanh}"></td>
+                  <td>
+                    <span th:if="${phieubh.status == 0}" class="text-white bg-primary  p-1"
+                      th:text="${phieubh.status == 0 ? 'Đang giao việc' : ''}"></span>
+                    <span th:if="${phieubh.status == 1}" class="text-white bg-warning  p-1"
+                      th:text="${phieubh.status == 1 ? 'Đang sữa chữa' : ''}"></span>
+                    <span th:if="${phieubh.status == 2}" class="text-white  bg-success p-1"
+                      th:text="${phieubh.status == 2 ? 'Bảo hành hoàn tất' : ''}"></span>
+                  </td>
+
+                  <td>
+                    <a th:href="@{'/manager/phieubhs/detail/' + ${phieubh.maPBH}}" class="btn btn-outline-primary"><i class="fa fa-info" aria-hidden="true"></i></a>
+                    <a th:href="@{'/manager/phieubhs/edit/' + ${phieubh.maPBH}}" class="btn btn-outline-warning"><i
+                        class="fas fa-edit"></i></a>
+                    <!-- <a th:data-id="${phieubh.maPBH}" th:data-name="${phieubh.maPBH}"
+                      onclick="showConfirmModelDialog(this.getAttribute('data-id'),this.getAttribute('data-name'))"
+                      class="btn btn-outline-danger"><i class="fas fa-trash-alt text-danger "></i></a> -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <script>
+            const showConfirmModelDialog = (id, name) => {
+              $("#productName").text(name);
+              $("#yesOption").attr("href", "/manager/phieubhs/delete/" + id);
+              $("#confirmationId").modal("show");
+            };
+          </script>
+          <!-- Modal -->
+          <div class="modal fade" id="confirmationId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Xác nhận</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Bạn có muốn xóa " <span id="productName"></span>"?
+                </div>
+                <div class="modal-footer">
+                  <a id="yesOption" type="button" class="btn btn-danger">Có</a>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Không
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-muted">
+          <form action="">
+            <div class="form-inline float-left">
+              <label for="size">Page Size: </label>
+              <select class="form-control" name="size" id="size" onchange="this.form.submit()">
+                <option th:selected="${phieubhPage.size == 5}" value="5">
+                  5
+                </option>
+                <option th:selected="${phieubhPage.size == 10}" value="10">
+                  10
+                </option>
+              </select>
+            </div>
+
+            <nav aria-label="Page navigation" th:if="${phieubhPage.totalPages > 0}">
+              <ul class="pagination justify-content-center">
+                <li th:class="${1 == phieubhPage.number + 1} ? 'page-item active' : 'page-item' ">
+                  <a th:href="@{/manager/phieubhs/(tenNV=${tenNV}, size=${phieubhPage.size},page=${0})}"
+                    th:class="page-link">
+                    First
+                  </a>
+                </li>
+                <li class="page-item active" th:each="pageNumber : ${pageNumbers}" th:if="${phieubhPage.totalPages > 1}"
+                  th:class="${pageNumber  == phieubhPage.number +1 } ? 'page-item active ' : 'page-item'">
+                  <a th:href="@{/manager/phieubhs/(tenNV=${tenNV}, size=${phieubhPage.size},page=${pageNumber - 1})}"
+                    th:class="page-link" th:text="${pageNumber}">1</a>
+                </li>
+                <li th:class="${phieubhPage.totalPages -1 == phieubhPage.number} ? 'page-item active' : 'page-item' ">
+                  <a th:href="@{/manager/phieubhs/(tenNV=${tenNV}, size=${phieubhPage.size},page=${phieubhPage.totalPages -1})}"
+                    th:class="page-link">
+                    Last
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+</html>

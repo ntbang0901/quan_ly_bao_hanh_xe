@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{Layout.html}">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kiểm tra thời hạn bảo hành</title>
+<!-- Import Boostrap css, js, font awesome here -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css"
+	rel="stylesheet" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<style>
+.cycle-slide {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: block;
+	overflow: hidden;
+}
+
+.cycle-slide img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	max-height: 100%;
+	width: auto;
+	height: auto;
+}
+</style>
+<body>
+	<div layout:fragment="contentlayout">
+		<div class="section pagetitle-wrapper"
+			style="height: 121px; background-image: url('https://www.baohanhhp.vn/web/frontend/img/backgrounds/bg6.jpg'); background-position: center;">
+			<div class="container">
+				<div class="pagetitle">
+					<h2 class="title">Kiểm tra thời hạn bảo hành</h2>
+				</div>
+			</div>
+		</div>
+		<section class="breadcrumb breadcrumb-1">
+			<div class="container">
+				<p>
+					<a th:href="@{/WEB}">Trang chủ</a> <a
+						th:href="@{/WEB/checkthoihanbaohanh}">Kiểm tra thời hạn bảo hành</a>
+				</p>
+			</div>
+		</section>
+		<!-- CONTACT-->
+		<div class="contact-wrapper">
+			<div class="container">
+				<div class="row">
+					<div class="col mt-4">
+						<div class="card">
+							<div class="card-header">Thông tin thời hạn bảo hành</div>
+							<div class="card-body">
+								<div class="row" th:if="${carsDto.isEmpty()}">
+									<div class="col">
+										<div class="alert alert-danger" role="alert">
+											<strong>Xe không tồn tại</strong>
+										</div>
+									</div>
+								</div>
+								<div class="table-responsive">
+									<table class="table table-striped table-inverse"
+										th:if="${!carsDto.isEmpty()}">
+										<thead class="thead-inverse">
+											<tr>
+												<th>Số xe</th>
+												<th>Tên xe</th>
+												<th>Chủ xe</th>
+												<th>Số điện thoại</th>
+												<th>Ngày mua</th>
+												<th>Thời gian bảo hành</th>
+												<th>Trạng thái bảo hành</th>
+												
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each=" dto , iStat : ${carsDto}">
+												<td th:text="${dto.soXe}"></td>
+												<td th:text="${dto.tenXe}"></td>
+												<td th:text="${chuXe}"></td>
+												<td th:text="${sdt}"></td>
+												
+												<td th:text="${dto.ngayMua}"></td>
+												<td th:text="${dto.tGBH}"></td>
+												<td>
+													<span th:if="${dto.trangThaiBH == true}"
+													class="text-white bg-primary  p-1"
+													th:text="${dto.trangThaiBH == true ? 'Còn' : ''}"></span>
+													<span th:if="${dto.trangThaiBH == false}"
+													class="text-white  bg-danger p-1"
+													th:text="${dto.trangThaiBH == false ? 'Hết' : ''}"></span>
+												</td>
+
+
+											</tr>
+										</tbody>
+									</table>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+</body>
+<script th:src="@{/index.js}"></script>
+</html>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>This is a WebPage using Bootstrap 4</title>
+    <!-- Import Boostrap css, js, font awesome here -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    />
+    <link
+      href="https://use.fontawesome.com/releases/v5.0.4/css/all.css"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/style.css}">
+  </head>
+
+  <style>
+    .cycle-slide {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      display: block;
+      overflow: hidden;
+    }
+    .cycle-slide img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-height: 100%;
+      width: auto;
+      height: auto;
+    }
+  </style>
+  <body>
+    <!-- Navigation -->
+    <header>
+      <div id="sticked-menu">
+        <div class="mainheader">
+          <div class="container newclearfix">
+            <h1 class="logo" id="logo-1">
+              <a href="/vi/">
+                <img
+                  src="https://www.tranlegroup.com/Uploads/Image/logo-dep/4.JPG"
+                  alt="logo"
+                  height="40px"
+                />
+              </a>
+            </h1>
+            <!-- NAVIGATION-->
+            <nav class="menu-wrapper menu-wrapper-float">
+              <ul class="default-menu mainmenu" id="mainmenu">
+                <li class="mainmenu-item">
+                  <a href="#">
+                    <span class="menuoffset">Trang chủ</span>
+                  </a>
+                </li>
+                <li class="mainmenu-item">
+                  <a href="#">
+                    <span class="menuoffset">Về chúng tôi</span>
+                  </a>
+                </li>
+                <li class="mainmenu-item">
+                  <a href="#">
+                    <span class="menuoffset">Dịch vụ</span>
+                  </a>
+                </li>
+                <li class="mainmenu-item">
+                  <a href="#">
+                    <span class="menuoffset">Bài viết</span>
+                  </a>
+                </li>
+                <li class="mainmenu-item haschild">
+                  <a class="parent-link" href="">
+                    <span class="menuoffset">Quy định bảo hành</span>
+                  </a>
+                  <ul class="menulevel" style="width: 350px">
+                    <li>
+                      <a
+                        target="_blank"
+                        href="#"
+                      >
+                        <span class="menuoffset">Quy định bảo hành chung</span>
+                      </a>
+                    </li>
+                    <!-- <li>
+                      <a
+                        target="_blank"
+                        href="/web/frontend/file/HP-Bao-Hanh-1-doi-1-man-hinh.pdf"
+                      >
+                        <span class="menuoffset"
+                          >Bảo hành 1 đổi 1 màn hình</span
+                        >
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        target="_blank"
+                        href="/web/frontend/file/HP-Bao-hanh-1-doi-1-may-in.pdf"
+                      >
+                        <span class="menuoffset">Bảo hành 1 đổi 1 máy in</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        target="_blank"
+                        href="/web/frontend/file/HP-Bao-Hanh-Tai-Nha-khach-hang.pdf"
+                      >
+                        <span class="menuoffset"
+                          >Bảo hành tại nhà khách hàng</span
+                        >
+                      </a>
+                    </li> -->
+                    <li>
+                      <a
+                        target="_blank"
+                        href="#"
+                      >
+                        <span class="menuoffset">Bảo hành theo hóa đơn</span>
+                      </a>
+                    </li>
+                    <!-- <li>
+                      <a
+                        target="_blank"
+                        href="/web/frontend/file/HP-Giao-va-Nhan-tai-nha.pdf"
+                      >
+                        <span class="menuoffset">Giao và nhận tại nhà</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        target="_blank"
+                        href="/web/frontend/file/HP-Quy-dinh-bao-hanh-muc-in.pdf"
+                      >
+                        <span class="menuoffset">Quy định bảo hành mục in</span>
+                      </a>
+                    </li> -->
+                    <li>
+                      <a
+                        target="_blank"
+                        href="#"
+                      >
+                        <span class="menuoffset"
+                          >Quy định giới hạn bảo hành</span
+                        >
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="mainmenu-item">
+                  <a href="">
+                    <span class="menuoffset">Liên hệ</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <!-- END: NAVIGATION-->
+            <!--MENU BUTTON-->
+            <span class="menu-button fa fa-reorder" id="menu-button"></span>
+          </div>
+        </div>
+      </div>
+      <!-- TOPBAR RESPONSIVE-->
+
+      <!-- END: TOPBAR RESPONSIVE-->
+    </header>
+    <!-- Carousel -->
+    <div class="slider">
+      <div
+        id="carouselExampleControls"
+        class="carousel slide"
+        data-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div
+              class="tp-bgimg defaultimg"
+              style="
+                background-color: rgba(0, 0, 0, 0);
+                background-repeat: no-repeat;
+                background-image: url('/images/hau-mai_auto_x2.jpg');
+                background-size: cover;
+                background-position: center center;
+                width: 100%;
+                height: 100%;
+                opacity: 1;
+                visibility: inherit;
+                z-index: 20;
+              "
+
+            ></div>
+          </div>
+          <div class="carousel-item">
+            <div
+              class="tp-bgimg defaultimg"
+              style="
+                background-color: rgba(0, 0, 0, 0);
+                background-repeat: no-repeat;
+                background-image: url('/images/10_auto_x2.jpg');
+                background-size: cover;
+                background-position: center center;
+                width: 100% !important;
+                height: 100%;
+                opacity: 1;
+                visibility: inherit;
+                z-index: 20;
+              "
+
+            ></div>
+          </div>
+          <div class="carousel-item">
+            <div
+              class="tp-bgimg defaultimg"
+              style="
+                background-color: rgba(0, 0, 0, 0);
+                background-repeat: no-repeat;
+                background-image: url('/images/mo-tiem-sua-xe-may-2-min.jpg');
+                background-size: cover;
+                background-position: center center;
+                width: 100%;
+                height: 100%;
+                opacity: 1;
+                visibility: inherit;
+                z-index: 20;
+              "
+
+            ></div>
+          </div>
+        </div>
+        <a
+          class="carousel-control-prev"
+          href="#carouselExampleControls"
+          role="button"
+          data-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a
+          class="carousel-control-next"
+          href="#carouselExampleControls"
+          role="button"
+          data-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+    <!-- jumbotron -->
+
+    <div class="stats blue-grey-bg" id="stats">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <a
+              style="text-decoration: none"
+              href="http://www.baohanhhp.vn/vi/kiem-tra-bao-hanh.html"
+            >
+              <div class="stat-item">
+                <span class="stat-icon">
+                  <img
+                    src="https://www.baohanhhp.vn/web/frontend/img/icons/icon4_50x50.png"
+                    atl="project complete"
+                  />
+                </span>
+                <div class="stat-content">
+                  <p class="title">
+                    Trạng thái máy <br />
+                    đang bảo hành
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <a
+              style="text-decoration: none"
+              href="http://www.baohanhhp.vn/vi/yeu-cau-bao-hanh.html"
+            >
+              <div class="stat-item">
+                <span class="stat-icon">
+                  <img
+                    src="https://www.baohanhhp.vn/web/frontend/img/icons/icon1_45x51.png"
+                    atl="project complete"
+                  />
+                </span>
+                <div class="stat-content">
+                  <p class="title">
+                    Yêu cầu <br />
+                    bảo hành
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <a
+              style="text-decoration: none"
+              target="_blank"
+              href="https://support.hp.com/us-en/checkwarranty"
+            >
+              <div class="stat-item">
+                <span class="stat-icon">
+                  <img
+                    src="https://www.baohanhhp.vn/web/frontend/img/icons/icon7_48x50.png"
+                    atl="project complete"
+                  />
+                </span>
+                <div class="stat-content">
+                  <p class="title">
+                    Kiểm tra thời <br />
+                    hạn bảo hành
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-3 col-sm-6 col-xs-12">
+            <a
+              style="text-decoration: none"
+              target="_blank"
+              href="http://partsurfer.hp.com/search.aspx"
+            >
+              <div class="stat-item">
+                <span class="stat-icon">
+                  <img
+                    src="https://www.baohanhhp.vn/web/frontend/img/icons/icon9_58x60.png"
+                    atl="project complete"
+                  />
+                </span>
+                <div class="stat-content">
+                  <p class="title">
+                    Kiểm tra mã <br />
+                    linh kiện
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <section class="wcu">
+        <h2
+          class="section-title section-title-underline-1 section-title-style-1 section-title-color-grey section-title-center mar-1"
+        >
+          Trung tâm bảo hành CNPM Việt Nam
+        </h2>
+        <div class="icon-boxes icon-boxes-pad-1">
+          <div class="row">
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <div class="icon-box">
+                <div class="icon">
+                  <img
+                    class="icon"
+                    src="https://www.baohanhhp.vn/images/uploads/images/Blogs/icon4_50x50.png"
+                    alt="icon1_49x51"
+                  />
+                </div>
+                <div class="icon-box-content">
+                  <h3 class="title">Linh kiện chính hãng</h3>
+                  <p class="description">
+                    CNPM không sửa chi tiết trên từng linh kiện mà luôn thay thế
+                    một linh kiện mới khác cùng mã được nhập trực tiếp từ nhà
+                    máy sản xuất của CNPM trên toàn thế giới. Vì vậy, CNPM luôn
+                    cam kết linh kiện chính hãng.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <div class="icon-box">
+                <div class="icon">
+                  <img
+                    class="icon"
+                    src="https://www.baohanhhp.vn/images/uploads/images/Blogs/icon3_50x50.png"
+                    alt="icon1_49x51"
+                  />
+                </div>
+                <div class="icon-box-content">
+                  <h3 class="title">Dịch vụ nhanh chóng</h3>
+                  <p class="description">
+                    Với phương châm “Chăm sóc máy khách hàng như chính sản phẩm
+                    chúng ta bỏ tiền ra mua” vì vậy, dịch vụ bảo hành luôn được
+                    thực hiện nhanh chóng một cách chuyên nghiệp, nhiệt tình và
+                    tận tâm.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <div class="icon-box">
+                <div class="icon">
+                  <img
+                    class="icon"
+                    th:src="@{https://www.baohanhhp.vn/images/uploads/images/Blogs/icon2_51x51.png}"
+                    alt="icon1_49x51"
+                  />
+                </div>
+                <div class="icon-box-content">
+                  <h3 class="title">Hỗ trợ 24/7</h3>
+                  <p class="description">
+                    Khi khách hàng gặp sự cố, bất kể ngày hay đêm hay liên hệ
+                    tổng đài 1800xxxxxx, khách hàng sẽ được đội ngũ kỹ sư của
+                    CNPM hỗ trợ miễn phí qua điện thoại từ xa.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+              <div class="icon-box">
+                <div class="icon">
+                  <img
+                    class="icon"
+                    src="https://www.baohanhhp.vn/images/uploads/images/Blogs/icon1_45x51.png"
+                    alt="icon1_49x51"
+                  />
+                </div>
+                <div class="icon-box-content">
+                  <h3 class="title">Đội ngũ chuyên nghiệp</h3>
+                  <p class="description">
+                    Toàn bộ đội ngũ của CNPM đều được trải qua khóa huấn luyện
+                    kỹ năng chăm sóc khách hàng cao cấp thực hiện trong nước và
+                    ngoài nước. Mang lại một cảm giác chuyên nghiệp khi khách
+                    hàng tiếp xúc dịch vụ.&nbsp;
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+    <section class="testimonials-wrapper">
+      <div class="parallax parallax-testi1">
+        <div class="container">
+          <div class="carousel-wrapper">
+            <div class="carousel">
+              <div class="testimonials owl-carousel owl-theme">
+                <div class="testimonial">
+                  <p class="tes-content">
+                    Innovation is key to progress, it is anything but business
+                    as usual and without it we cannot advance.
+                  </p>
+                  <p class="author">Oanh Phuong</p>
+                </div>
+                <div class="testimonial">
+                  <p class="tes-content">
+                    The betterment of society is not a job to be left to a few.
+                    It&rsquo;s a responsibility to be shared by all.
+                  </p>
+                  <p class="author">David Packard</p>
+                </div>
+                <div class="testimonial">
+                  <p class="tes-content">
+                    At CNPM, quality matters and it&rsquo;s everyone&rsquo;s
+                    responsibility. We are committed to continually improving
+                    the quality of our prodcuts and services. And we deliver an
+                    exceptional cusomer experience by meeting requirements and
+                    embedding quality in everything we do.
+                  </p>
+                  <p class="author">Dion Weisler</p>
+                </div>
+              </div>
+              <div class="carousel-nav">
+                <span class="prev-btn fa fa-angle-left"></span>
+                <span class="next-btn fa fa-angle-right"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="blue-grey-bg"></div>
+
+    <hr class="my-2" />
+
+    <footer>
+      <div class="container-fluid padding">
+        <div class="row text-center">
+          <div class="col-md-4">
+            <img src="../../../static/images/logo.png" />
+            <hr class="light" />
+            <p>111-222-3333</p>
+            <p>mymail@gmail.com</p>
+            <p>Bach Mai street, Hanoi, Vietnam</p>
+          </div>
+          <div class="col-md-4">
+            <hr class="light" />
+            <h5>Working hours</h5>
+            <hr class="light" />
+            <p>Monday-Friday: 8am - 5pm</p>
+            <p>Weekend: 8am - 12am</p>
+          </div>
+          <div class="col-md-4">
+            <hr class="light" />
+            <h5>Services</h5>
+            <hr class="light" />
+            <p>Outsourcing</p>
+            <p>Website development</p>
+            <p>Mobile applications</p>
+          </div>
+          <div class="col-12">
+            <hr class="light-100" />
+            <h5>&copy; WebPro</h5>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script th:src="@{/index.js}"></script>
+</html>

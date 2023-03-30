@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layout.html}">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <title>Trung tâm bảo hành xe</title>
+    <!-- Import Boostrap css, js, font awesome here -->
+    <link rel="stylesheet" th:href="@{/style.css}">
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <header  >
+      <div th:fragment="header" id="sticked-menu">
+        <div class="mainheader">
+          <div class="container newclearfix">
+            <h1 class="logo" id="logo-1">
+              <a th:href="@{/WEB}">
+                <img
+                  src="https://www.tranlegroup.com/Uploads/Image/logo-dep/4.JPG"
+                  alt="logo"
+                  height="40px"
+                />
+              </a>
+            </h1>
+            <!-- NAVIGATION-->
+            <nav class="menu-wrapper menu-wrapper-float">
+              <ul class="default-menu mainmenu" id="mainmenu">
+                <li class="mainmenu-item">
+                  <a th:href="@{/CNPM}">
+                    <span class="menuoffset" >[[#{header.home}]]</span>
+                  </a>
+                </li>
+                <li class="mainmenu-item">
+                  <a href="#">
+                    <span class="menuoffset">[[#{header.aboutus}]]</span>
+                  </a>
+                </li>
+                <li class="mainmenu-item">
+                  <a href="#">
+                    <span class="menuoffset">[[#{header.service}]]</span>
+                  </a>
+                </li>
+                <li class="mainmenu-item">
+                  <a href="#">
+                    <span class="menuoffset">[[#{header.post}]]</span>
+                  </a>
+                </li>
+                <li class="mainmenu-item haschild">
+                  <a class="parent-link" href="">
+                    <span class="menuoffset">[[#{header.policy}]]</span>
+                  </a>
+                  <ul class="menulevel" style="width: 350px">
+                    <li>
+                      <a
+                        target="_blank"
+                        href="#"
+                      >
+                        <span class="menuoffset">Quy định bảo hành chung</span>
+                      </a>
+                    </li>
+                    <!-- <li>
+                      <a
+                        target="_blank"
+                        href="/web/frontend/file/HP-Bao-Hanh-1-doi-1-man-hinh.pdf"
+                      >
+                        <span class="menuoffset"
+                          >Bảo hành 1 đổi 1 màn hình</span
+                        >
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        target="_blank"
+                        href="/web/frontend/file/HP-Bao-hanh-1-doi-1-may-in.pdf"
+                      >
+                        <span class="menuoffset">Bảo hành 1 đổi 1 máy in</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        target="_blank"
+                        href="/web/frontend/file/HP-Bao-Hanh-Tai-Nha-khach-hang.pdf"
+                      >
+                        <span class="menuoffset"
+                          >Bảo hành tại nhà khách hàng</span
+                        >
+                      </a>
+                    </li> -->
+                    <li>
+                      <a
+                        target="_blank"
+                        href="#"
+                      >
+                        <span class="menuoffset">Bảo hành theo hóa đơn</span>
+                      </a>
+                    </li>
+                    <!-- <li>
+                      <a
+                        target="_blank"
+                        href="/web/frontend/file/HP-Giao-va-Nhan-tai-nha.pdf"
+                      >
+                        <span class="menuoffset">Giao và nhận tại nhà</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        target="_blank"
+                        href="/web/frontend/file/HP-Quy-dinh-bao-hanh-muc-in.pdf"
+                      >
+                        <span class="menuoffset">Quy định bảo hành mục in</span>
+                      </a>
+                    </li> -->
+                    <li>
+                      <a
+                        target="_blank"
+                        href="#"
+                      >
+                        <span class="menuoffset"
+                          >Quy định giới hạn bảo hành</span
+                        >
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="mainmenu-item">
+                  <a href="">
+                    <span class="menuoffset">[[#{header.contact}]]</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <!-- END: NAVIGATION-->
+            <!--MENU BUTTON-->
+           <div>
+             Language :
+             <a href="?language=en">English</a>|
+             <a href="?language=vi_VN">Viet Nam</a>|
+             <a href="?language=ja_JP">Japanese</a>|
+          </div>
+        </div>
+      </div>
+    </header>
+  </body>
+  <script th:src="@{/index.js}"></script>
+</html>

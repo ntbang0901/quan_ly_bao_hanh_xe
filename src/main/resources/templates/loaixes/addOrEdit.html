@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  lang="en"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{dashboardLayout.html}"
+>
+  <head> </head>
+  <body>
+    <section class="row" layout:fragment="content">
+      <div class="col-6 offset-3 mt-4">
+        <form
+          th:action="@{/manager/loaixes/saveOrUpdate}"
+          method="post"
+          th:object="${loaixe}"
+        >
+          <div class="card">
+            <div class="card-header">
+              <h2 th:text="${loaixe.isEdit ? 'Chỉnh sửa thông tin loại xe' : 'Thêm loại xe'}" >Thêm loại xe</h2>
+            </div>
+            <div class="card-body">
+              <div class="form-group d-none">
+                <label>ID</label>
+                <input type="hidden" th:field="*{isEdit}" />
+                <input
+                  type="text"
+                  class="form-control"
+                  th:field="*{maLoaiXe}"
+                  aria-describedby="categoryIdHid"
+                  placeholder="id"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="tenLoai">Tên loại</label>
+                <input
+                  th:field="*{tenLoai}"
+                  th:data-name="${tenLoai}"
+                  type="text"
+                  class="form-control"
+                  name="tenLoai"
+                  id="tenLoai"
+                  aria-describedby="usernameHid"
+                  placeholder="Tên loại"
+                />
+                <small
+                  th:if="${#fields.hasErrors()}"
+                  id="usernameHip"
+                  class="form-text text-muted"
+                  ><span th:errors="*{tenLoai}" style="color: red"></span
+                ></small>
+              </div>
+              s
+              <div class="form-group">
+                <label for="soPhanKhoi">Số phân khối</label>
+                <select
+                  th:field="*{soPhanKhoi}"
+                  class="form-control"
+                  name="soPhanKhoi"
+                  id="soPhanKhoi"
+                >
+                  <option value="50">50</option>
+                  <option value="100">110</option>
+                  <option value="110">110</option>
+                  <option value="125">125</option>
+                  <option value="135">150</option>
+                  <option value="150">150</option>
+                  <option value="160">150</option>
+                  <option value="250">250</option>
+                  <option value="300">300</option>
+                </select>
+              </div>
+            </div>
+            <div class="card-footer text-muted">
+              <button type="reset" class="btn btn-secondary">Reset</button>
+              <a th:href="@{/manager/loaixes/}" class="btn btn-success"
+                >Danh sách loại xe</a
+              >
+              <button class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                <span th:if="${loaixe.isEdit}">Cập nhập</span>
+                <span th:unless=" ${loaixe.isEdit}">Lưu</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{Layout.html}">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trạng thái xe đang bảo hành</title>
+<!-- Import Boostrap css, js, font awesome here -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+<link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css"
+	rel="stylesheet" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<style>
+.cycle-slide {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: block;
+	overflow: hidden;
+}
+
+.cycle-slide img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	max-height: 100%;
+	width: auto;
+	height: auto;
+}
+</style>
+<body>
+	<div layout:fragment="contentlayout">
+		<div class="section pagetitle-wrapper"
+			style="height: 121px; background-image: url('https://www.baohanhhp.vn/web/frontend/img/backgrounds/bg6.jpg'); background-position: center;">
+			<div class="container">
+				<div class="pagetitle">
+					<h2 class="title">Trạng thái xe đang bảo hành</h2>
+				</div>
+			</div>
+		</div>
+		<section class="breadcrumb breadcrumb-1">
+			<div class="container">
+				<p>
+					<a th:href="@{/WEB}">Trang chủ</a> <a
+						th:href="@{/WEB/checktrangthaibaohanh}">Trạng thái xe đang bảo hành</a>
+				</p>
+			</div>
+		</section>
+		<!-- CONTACT-->
+		<div class="contact-wrapper">
+			<div class="container">
+				<div class="row">
+					<div class="contact clearfix">
+						<div class="col-md-12"></div>
+						<div class="col-md-12">
+							<h4
+								class="section-title section-title-style-4 section-title-color-grey marbt-4">
+								Nhập số phiếu</h4>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="feedback-form-wrapper">
+										<form th:action="checkedtrangthai" class="feedback-form auform"
+											name="contactform" method="get">
+											<div th:if="${message != null}" class="row alert alert-danger"
+														role="alert">
+												<i>[[${message}]]</i>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													
+													<span> Mã Phiếu <a
+														style="background-color: #0f4ca9; color: white"
+														class="badge badge-blue badge-round" data-toggle="modal"
+														data-target="#serial-number-modal"
+														aria-describedby="serialNumberLabel"
+														data-backdrop="static">?</a>
+													</span> <input class="input-feedback" style="margin-top: 15px"
+														type="number" placeholder="Mã phiếu" name="maPBH"
+														id="maPBH" autocomplete="off" required />
+												</div>
+												<div class="col-md-6">
+													<span> Số điện thoại <a
+														style="background-color: red; color: white"
+														class="badge badge-blue badge-round" data-toggle="modal"
+														data-target="#serial-number-modal"
+														aria-describedby="serialNumberLabel"
+														data-backdrop="static">?</a>
+													</span> <input class="input-feedback" style="margin-top: 15px"
+														type="text" placeholder="0123456789" name="sdt" id="sdt"
+														autocomplete="off" required />
+												</div>
+												<div class="col-md-4">
+													<div class="g-recaptcha"
+														data-sitekey="6LdHaloUAAAAAF1EHFXgsHPRUuj0pqaVCQQZf44a"></div>
+												</div>
+											</div>
+
+											<span class="aubtn submit-btn aubtn-primary aubtn-style-1">
+												<input  type="submit" value="Kiểm tra" />
+											</span>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+</body>
+<script th:src="@{/index.js}"></script>
+</html>

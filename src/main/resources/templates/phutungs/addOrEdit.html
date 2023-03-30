@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{dashboardLayout.html}">
+
+<head> </head>
+
+<body>
+  <section class="row" layout:fragment="content">
+    <div class="col mt-4">
+      <form th:action="@{/manager/phutungs/saveOrUpdate}" method="post" th:object="${phutung}"
+        enctype="multipart/form-data">
+        <div class="card">
+          <div class="card-header">
+            <h2 th:text="${phutung.isEdit ? 'Chỉnh sủa phụ tùng' : 'Thêm phụ tùng'}">Thêm phụ tùng</h2>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-6">
+                <div th:if="${message != null}" class="alert alert-danger" role="alert">
+                  <i>[[${message}]]</i>
+                </div>
+                <div class="form-group d-none">
+                  <label>ID</label>
+                  <input type="hidden" th:field="*{isEdit}" />
+                  <input type="text" class="form-control" th:field="*{maPhutung}" name="maPhutung" id="maPhutung"
+                    aria-describedby="maPhutungHid" placeholder="id" readonly />
+                </div>
+                <div class="form-group">
+                  <label for="tenPhutung">Tên phụ tùng</label>
+                  <input th:field="*{tenPhutung}" th:data-name="${tenPhutung}" type="text" class="form-control"
+                    name="tenPhutung" id="tenPhutung" aria-describedby="tenPhutungHid" placeholder="Tên phụ tùng" />
+                  <small th:if="${#fields.hasErrors()}" id="tenPhutungHid" class="form-text text-muted"><span
+                      th:errors="*{tenPhutung}" style="color: red"></span></small>
+                </div>
+                <div class="form-group">
+                  <label for="gia">Giá</label>
+                  <input th:field="*{gia}" th:data-name="${gia}" type="number" class="form-control" name="gia" id="gia"
+                    aria-describedby="giaHid" placeholder="Giá" />
+                  <small th:if="${#fields.hasErrors()}" id="giaHid" class="form-text text-muted"><span
+                      th:errors="*{gia}" style="color: red"></span></small>
+                </div>
+                <div class="form-group">
+                  <label for="soLuong">Số lượng</label>
+                  <input th:field="*{soLuong}" th:data-name="${soLuong}" type="number" class="form-control" name="soLuong" id="soLuong"
+                    aria-describedby="soLuongHid" placeholder="Số lượng" />
+                  <small th:if="${#fields.hasErrors()}" id="soLuongHid" class="form-text text-muted"><span
+                      th:errors="*{soLuong}" style="color: red"></span></small>
+                </div>
+                <div class="form-group">
+                  <label>Loại phụ tùng</label>
+                  <select th:field="*{maLoaiPhutung}" class="form-control operator" name="maLoaiPhutung"
+                    id="maLoaiPhutung">
+                    <option th:each=" item : ${loaiphutungs}" th:value="${item.maLoaiPhutung}" th:text="${item.tenLoai}"
+                      th:selected="${item.maLoaiPhutung == phutung.maLoaiPhutung}"></option>
+                  </select>
+                </div>
+                
+              </div>
+              <div class="col-4">
+                <script>
+                  function chooseFile(fileInput) {
+                    if (fileInput.files && fileInput.files[0]) {
+                      var reader = new FileReader();
+
+                      reader.onload = function (e) {
+                        $('#image').attr('src', e.target.result);
+                      }
+                      reader.readAsDataURL(fileInput.files[0]);
+                    }
+                  }
+                </script>
+                <img th:src="${phutung.image!=null? '/manager/phutungs/images/' + phutung.image : '/images/ImageNotAvailable.png'}"
+                  src="/images/ImageNotAvailable.png" class="img-fluid" width="75%" alt="" id="image">
+                <div class="form-group">
+                  <label for="imageFile">Thêm ảnh</label>
+                  <input type="file" onchange="chooseFile(this)" class="form-control-file" name="imageFile"
+                    id="imageFile" placeholder="Thêm ảnh" aria-describedby="imageFile" required/>
+                  <small id="imageFile" class="form-text text-muted"><span>Image is required</span></small>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer text-muted">
+              <button type="reset" class="btn btn-secondary">Reset</button>
+              <a th:href="@{/manager/phutungs/}" class="btn btn-success">Danh sách phụ tùng</a>
+              <button class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                <span th:if="${phutung.isEdit}">Cập nhập</span>
+                <span th:unless=" ${phutung.isEdit}">Lưu</span>
+              </button>
+            </div>
+          </div>
+      </form>
+    </div>
+  </section>
+  
+</body>
+
+</html>

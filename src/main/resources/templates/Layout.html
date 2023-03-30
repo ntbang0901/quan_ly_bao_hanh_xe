@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+
+>
+<head>
+    <title>Trung tâm bảo hành</title>
+    <!-- Required meta   tags -->
+    <meta charset="utf-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+
+    <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    />
+    <link
+            href="https://use.fontawesome.com/releases/v5.0.4/css/all.css"
+            rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <style>
+        .cycle-slide {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: block;
+            overflow: hidden;
+        }
+        .feedback-form-wrapper {
+            padding-right: 35px;
+            margin-bottom: 40px;
+        }
+        .aubtn-style-1 {
+            border: 1px solid;
+            line-height: 48px;
+        }
+        .feedback-form-wrapper .aubtn input {
+            padding: 0 50px;
+            color: #fff;
+        }
+        .aubtn.submit-btn input {
+            background: 0 0;
+            box-shadow: none;
+            border: none;
+            display: block;
+            height: 100%;
+            margin-bottom: 0;
+        }
+        .aubtn-primary:before {
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: #01aac1;
+        }
+        .aubtn-primary:after,
+        .aubtn-primary:before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            height: 100%;
+        }
+        .aubtn-primary:after {
+            transition: all 0.3s ease-in-out;
+            width: 0;
+            top: 50%;
+            left: 50%;
+            background: #fff;
+            opacity: 0;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+        }
+        .feedback-form-wrapper input,
+        .feedback-form-wrapper textarea {
+            background: #ededed;
+            border: 1px solid #dedede;
+            border-radius: 3px;
+            color: #333;
+        }
+        .aubtn-primary {
+            line-height: 50px;
+            font-weight: 700;
+            color: #fff;
+            position: relative;
+            z-index: 2;
+        }
+        .aubtn {
+            display: inline-block;
+            background: 0 0;
+            transition: all 0.3s ease-in-out;
+            border: none;
+            box-shadow: none;
+            cursor: pointer;
+        }
+        .aubtn-primary,
+        .rm {
+            text-transform: capitalize;
+        }
+
+        .aubtn,
+        .aubtn-primary:after {
+            -webkit-transition: all 0.3s ease-in-out;
+        }
+        .input-feedback {
+            line-height: 48px;
+            padding: 0 30px;
+            width: 100%;
+            height: 50px;
+            color: #888;
+            border: 1px solid #2c2c2c;
+            display: inline-block;
+        }
+        .badge {
+            display: inline-block;
+            min-width: 10px;
+            padding: 3px 7px;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            background-color: #777;
+            border-radius: 10px;
+        }
+        .feedback-form-wrapper input,
+        .feedback-form-wrapper textarea {
+            background: #ededed;
+            border: 1px solid #dedede;
+            border-radius: 3px;
+            color: #333;
+        }
+        .feedback-form-wrapper .aubtn {
+            margin: 12px 0 0;
+        }
+        .aubtn.submit-btn {
+            font-weight: 700;
+            border-color: #01aac1;
+        }
+        .aubtn input {
+            cursor: pointer;
+        }
+
+        .contact {
+            margin-bottom: 60px;
+        }
+        .contact-info-title {
+            color: #666;
+            margin-bottom: 40px;
+        }
+        .contact .section-title {
+            font-weight: 700;
+        }
+        .section-title-color-grey {
+            color: #333;
+        }
+        .section-title-style-4 {
+            font-size: 18px;
+        }
+        .marbt-4 {
+            margin-bottom: 25px;
+        }
+        .cycle-slide img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-height: 100%;
+            width: auto;
+            height: auto;
+        }
+        .fa-home:before {
+            content: "\f015";
+        }
+        .breadcrumb p a:first-child:before {
+            content: "";
+            font-family: FontAwesome;
+            padding: 0 5px 0 0;
+        }
+        .breadcrumb p a:before {
+            content: "/";
+            padding: 0 10px;
+        }
+        .breadcrumb p a {
+            color: #333;
+        }
+        .pagetitle {
+            height: 121px;
+            background-size: cover;
+            display: table;
+            float: left;
+        }
+        .pagetitle .title {
+            font-size: 30px;
+            font-weight: 700;
+            color: #fff;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        .section {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<header th:replace="~{layout/CNPM/header :: header}" >Header</header>
+    <section >
+            <div layout:fragment="contentlayout"></div>
+    </section>
+        <footer th:replace="~{layout/CNPM/footer :: footer}" >Header</footer>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+        integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+
+<script
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"
+></script>
+</body>
+<script th:src="@{/index.js}"></script>
+</html>

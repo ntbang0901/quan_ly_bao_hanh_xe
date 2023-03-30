@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/dashboardLayout.html}">
+
+<head>
+  <title>Chi tiết phiếu bảo hành</title>
+
+  
+  <style>
+    p {
+    margin-left: 4px !important;
+    }
+    </style>
+</head>
+
+<body>
+  <section class="row" layout:fragment="content">
+    <div class="col-8 offset-2 mt-4">
+      <div class="card">
+        <div class="card-header">
+          <h3 style="text-align: center;">Phiếu bảo hành</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6 d-flex">
+
+              <b class="">Họ tên: </b>
+              <p class="" th:text=" ${kh.ho + ' ' + kh.ten}">
+              </p>
+
+            </div>
+            <div class="col-6 d-flex">
+              <b>Điện thoại: </b>
+              <p id="sdt" th:text="${kh.sdt}"></p>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col d-flex"><b>Địa chỉ: </b>
+              <p th:text="${kh.diachi}"></p>
+            </div>
+          </div>
+          <div class="row ">
+            <div class="col d-flex">
+              <b>Tình trạng xe: </b>
+              <p th:text="${pbh.tinhTrangxe}"></p>
+            </div>
+
+          </div>
+          <div class="row ">
+            <div class="col d-flex">
+              <b>Nội dung bảo hành: </b>
+              <p th:text="${pbh.noiDungBaoHanh}"></p>
+            </div>
+
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped table-inverse">
+              <thead class="thead-inverse">
+                <tr>
+                  
+                  <th>Tên phụ tùng</th>
+                  <th>ĐVT</th>
+                  <th>Giá</th>
+                  <th>Số lượng</th>
+                  <th>Thành tiền</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each=" ct_phieubh , iStat : ${ct_phieubhsdto}">
+                  
+                  <td th:text="${ct_phieubh.tenPhutung}"></td>
+                  <td>Cái</td>
+                  <td th:text="${ct_phieubh.gia}"></td>
+                  <td th:text="${ct_phieubh.soLuong}"></td>
+                  
+                  <td th:text="${ct_phieubh.thanhTien}"></td>
+                </tr>
+                <tr>
+                  
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                  <td><b>Tổng cộng:</b></td>
+                  <td><b>[[${tongTien}]]</b></td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="row ">
+            <div class="col d-flex">
+              <b>Ghi chú: </b>
+              <p>Phiếu này có giá trị như phiếu báo giá và phiếu thanh toán</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-5 offset-1">
+              <b>Khách hàng</b>
+              <p class="text-muted">(Ký và ghi rõ họ tên)</p>
+            </div>
+            <div class="col-4 offset-2">
+              <b>Nhân viên lập phiếu</b>
+              <p class="text-muted">(Ký và ghi rõ họ tên)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  </section>
+</body>
+
+</html>

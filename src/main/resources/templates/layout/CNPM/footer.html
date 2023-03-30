@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        lang="en"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{Layout.html}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trung tâm bảo hành xe</title>
+    <!-- Import Boostrap css, js, font awesome here -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    />
+    <link
+      href="https://use.fontawesome.com/releases/v5.0.4/css/all.css"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/style.css}">
+  </head>
+  <body>
+    <!-- Navigation -->
+
+      <div th:fragment="footer" class="container-fluid padding">
+        <div class="row text-center">
+          <div class="col-md-4">
+            <hr class="light" />
+            <img width="30px" src="https://www.tranlegroup.com/Uploads/Image/logo-dep/4.JPG" />
+            <hr class="light" />
+            <p>111-222-3333</p>
+            <p>CMNP@gmail.com</p>
+            <p>97 Man Thiện, Q9, TPHCM</p>
+          </div>
+          <div class="col-md-4">
+            <hr class="light" />
+            <h5>Working hours</h5>
+            <hr class="light" />
+            <p>Monday-Friday: 8am - 5pm</p>
+            <p>Weekend: 8am - 12am</p>
+          </div>
+          <div class="col-md-4">
+            <hr class="light" />
+            <h5>Services</h5>
+            <hr class="light" />
+            <p>Outsourcing</p>
+            <p>Website development</p>
+            <p>Mobile applications</p>
+          </div>
+          <div class="col-12">
+            <hr class="light-100" />
+            <h5>CNPM</h5>
+          </div>
+        </div>
+      </div>
+
+  </body>
+  <script th:src="@{/index.js}"></script>
+</html>

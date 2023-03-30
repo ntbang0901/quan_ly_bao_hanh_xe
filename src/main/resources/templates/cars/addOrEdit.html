@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{dashboardLayout.html}">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
+        integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
+        integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet"
+        href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
+</head>
+
+<body>
+    <section class="row" layout:fragment="content">
+        <div class="col-6 offset-3 mt-4">
+            <form th:action="@{/manager/cars/saveOrUpdate}" method="post" th:object="${car}">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 th:text="${car.isEdit ? 'Chỉnh sửa thông tin xe' : 'Thêm xe'}">Thêm xe</h2>
+                    </div>
+                    <div class="card-body">
+                        <div th:if="${message != null}" class="alert alert-danger" role="alert">
+                            <i>[[${message}]]</i>
+                        </div>
+                        <div class="form-group d-none">
+                            <label>ID</label>
+                            <input type="hidden" th:field="*{isEdit}" />
+                            <input type="text" class="form-control" th:field="*{maXe}" name="maXe" id="maXe"
+                                aria-describedby="categoryIdHid" placeholder="id" />
+                        </div>
+                        <div class="form-group">
+                            <label for="tenXe">Số xe</label>
+                            <input th:field="*{soXe}" type="text" class="form-control" name="soXe" id="soXe"
+                                aria-describedby="usernameHid" placeholder="Số xe" />
+                            <small th:if="${#fields.hasErrors()}" id="usernameHip" class="form-text text-muted"><span
+                                    th:errors="*{soXe}" style="color: red"></span></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="tenXe">Tên Xe</label>
+                            <input th:field="*{tenXe}" type="text" class="form-control" name="tenXe" id="tenXe"
+                                aria-describedby="usernameHid" placeholder="Tên xe" />
+                            <small th:if="${#fields.hasErrors()}" id="usernameHip" class="form-text text-muted"><span
+                                    th:errors="*{tenXe}" style="color: red"></span></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="tenXe">Mã Khách</label>
+                            <input th:field="*{maKhach}" type="text" class="form-control" name="maKhach" id="maKhach"
+                                aria-describedby="usernameHid" placeholder="Mã Khách" />
+                            <small th:if="${#fields.hasErrors()}" id="usernameHip" class="form-text text-muted"><span
+                                    th:errors="*{maKhach}" style="color: red"></span></small>
+                        </div>
+                        <div class="form-group">
+                            <label>Loại xe</label>
+                            <select th:field="*{maLoaiXe}" class="form-control operator" name="maLoaiXe" id="maLoaiXe">
+                                <option th:each=" item : ${loaixes}" th:value="${item.maLoaiXe}"
+                                    th:text="${item.tenLoai}" th:selected="${item.maLoaiXe == car.maXe}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tGBH">TGBH</label>
+                            <input th:field="*{tGBH}" th:data-name="${tGBH}" type="text" class="form-control"
+                                name="tGBH" id="tGBH" aria-describedby="usernameHid" placeholder="Thời gian bảo hành" />
+                            <small th:if="${#fields.hasErrors()}" id="usernameHip" class="form-text text-muted"><span
+                                    th:errors="*{tGBH}" style="color: red"></span></small>
+                        </div>
+                        <script>
+                            // Date picker only
+                            $(".datepicker").datepicker({
+                                format: "mm/dd/yyyy",
+                                startDate: "-3d",
+                            });
+                        </script>
+                        <div class="form-group pmd-textfield pmd-textfield-floating-label">
+                            <label class="control-label" for="datepicker">Ngày mua:</label>
+                            <div class="input-group date" data-provide="datepicker">
+                                <input type="text" placeholder="Ngày mua" class="form-control w-50"
+                                    th:field="*{ngayMua}" id="ngayMua" name="ngayMua" />
+
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-th input-group-text h-100">
+                                        <i class="fas fa-calendar text-black-50"></i></span>
+                                </div>
+
+                            </div>
+                            <small th:if="${#fields.hasErrors()}" id="usernameHip" class="form-text text-muted"><span
+                                    th:errors="*{ngayMua}" style="color: red"></span></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="trangThaiBH">Trạng thái bảo hành</label>
+                            <select class="custom-select " name="trangThaiBH" id="trangThaiBH">
+                                <option value="1">Có</option>
+                                <option value="0">Không</option>
+                            </select>
+                        </div>
+                        <script type="text/javascript">
+                            $(".chosen").chosen();
+                        </script>
+                        <!--              <div class="form-group">-->
+                        <!--                <label for="soPhanKhoi">Trạng thái bảo hành</label>-->
+                        <!--                <select-->
+                        <!--                  th:field="*{trangThaiBH}"-->
+                        <!--                  class="form-control"-->
+                        <!--                  name="soPhanKhoi"-->
+                        <!--                  id="soPhanKhoi"-->
+                        <!--                >-->
+                        <!--                  <option value="1">Còn</option>-->
+                        <!--                  <option value="0">Hết</option>-->
+                        <!--                </select>-->
+                        <!--              </div>-->
+                    </div>
+                    <div class="card-footer text-muted">
+                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <a th:href="@{/manager/cars/}" class="btn btn-success">Danh sách xe</a>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-save"></i>
+                            <span th:if="${car.isEdit}">Cập nhập</span>
+                            <span th:unless=" ${car.isEdit}">Lưu</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</body>
+
+</html>

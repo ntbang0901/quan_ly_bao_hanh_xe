@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{Layout.html}">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yêu cầu bảo hành</title>
+    <!-- Import Boostrap css, js, font awesome here -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<style>
+    .cycle-slide {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        display: block;
+        overflow: hidden;
+    }
+
+    .cycle-slide img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-height: 100%;
+        width: auto;
+        height: auto;
+    }
+</style>
+
+<body>
+    <div layout:fragment="contentlayout">
+        <script src="https://www.google.com/recaptcha/api.js" async defer ></script>
+        <div class="section pagetitle-wrapper"
+            style="height: 121px; background-image: url('https://www.baohanhhp.vn/web/frontend/img/backgrounds/bg6.jpg'); background-position: center;">
+            <div class="container">
+                <div class="pagetitle">
+                    <h2 class="title">Yêu cầu bảo hành</h2>
+                </div>
+            </div>
+        </div>
+        <section class="breadcrumb breadcrumb-1">
+            <div class="container">
+                <p>
+                    <a th:href="@{/WEB}">Trang chủ</a> <a th:href="@{/WEB/yeucaubaohanh}">Yêu cầu bảo hành</a>
+                </p>
+            </div>
+        </section>
+        <!-- CONTACT-->
+        <div class="contact-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="clearfix">
+                        <div class="col-md-6">
+                            <div class="feedback-form-wrapper">
+
+                                <form th:action="xacnhanyeucau"
+                                      class="feedback-form auform"
+                                      method="post"
+                                     th:onsubmit="'return myFunction();'" 
+                                >
+                                    <h4 class="section-title section-title-style-4 section-title-color-grey marbt-4">
+                                        Thông tin yêu cầu bảo hành
+                                    </h4>
+                                    <div th:if="${status != null}" class="alert alert-danger" role="alert">
+                                        <i>[[${status}]]</i>
+                                    </div>
+                                    <div th:if="${message != null}" class="verify alert alert-danger" role="alert">
+                                        <i>[[${message}]]</i>
+                                    </div>
+
+                                    <input type="text" placeholder="Họ và tên" name="name" id="name" autocomplete="off" required>
+                                    <input type="text" placeholder="Số điện thoại" name="sdt" id="sdt"
+                                        autocomplete="off" required>
+                                    <input type="email" placeholder="Email" name="email" id="email" autocomplete="off" required>
+                                    <input type="text" placeholder="Địa chỉ" name="diachi" id="diachi"
+                                        autocomplete="off" required>
+                                    <input type="text" placeholder="Số xe" name="soXe" id="soXe" autocomplete="off" required>
+                                    <textarea class="message" name="msg" id="msg"
+                                        placeholder="Miêu tả lỗi xe / Yêu cầu hỗ trợ" required></textarea>
+
+
+                                    <div class="g-recaptcha" th:data-sitekey="${@environment.getProperty('recaptcha.key')}"   ></div>
+
+											<script type="text/javascript">
+										     function myFunction()
+										      {
+										    	 
+										    	 if(grecaptcha.getResponse()){
+										    		 return true;
+										    	 }
+										    	 else {
+										    		 document.
+										    		 return false;
+										    	 }
+										      }
+										    	 
+										     
+										 </script>
+											<div >123456</div>
+											
+									
+                                    <span class="aubtn submit-btn aubtn-primary aubtn-style-1">
+                                        <input id="registerWarranty" type="submit"  value="Gửi">
+                                    </span>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    </div>
+    </div>
+
+    </div>
+
+
+    
+
+</body>
+<script th:src="@{/index.js}"></script>
+
+
+</html>
